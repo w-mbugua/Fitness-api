@@ -10,6 +10,7 @@ def create_app(config_name):
     app.config.from_object(config_options[config_name])
     app.url_map.strict_slashes = False
 
+    # blueprint
     from .auth.v1 import version1 as version1_blueprint
     app.register_blueprint(version1_blueprint, url_prefix='api/v1')
 
