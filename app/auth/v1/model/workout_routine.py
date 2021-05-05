@@ -29,12 +29,5 @@ class WorkoutRoutineModel:
             if workout_routine['id'] == self.id:
                 return workout_routine
 
-    def get_all_workout_routines(self, username):
-        user_workout_routine = []
-
-        for workout_routine in WorkoutRoutineModel.workout_routines:
-            if workout_routine['username'] == self.username:
-                user_workout_routine.append(workout_routine)
-        
-        return user_workout_routine
-
+    def get_all_workout_routines(self):
+        return WorkoutRoutineModel.workout_routines

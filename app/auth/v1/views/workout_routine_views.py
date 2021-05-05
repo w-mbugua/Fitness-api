@@ -38,3 +38,14 @@ class WorkoutRoutine(Resource):
             "message": "The workout routine has been created!",
             "workout_routine": new_workout_routine.__dict__
         }
+
+    def get(self):
+        """
+        Method for getting a workout routine by id.
+        """
+
+        workout_routines = WorkoutRoutineModel.get_all_workout_routines(self)
+
+        return {
+            "Workout routine": workout_routines
+        }
