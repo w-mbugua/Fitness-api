@@ -25,9 +25,10 @@ class WorkoutRoutineModel:
         WorkoutRoutineModel.workout_routines.append(data)
         return self.workout_routines
 
-    def get_workout_routine_by_id(self, id):
+    @classmethod
+    def get_workout_routine_by_id(cls, id):
         for workout_routine in WorkoutRoutineModel.workout_routines:
-            if workout_routine['id'] == self.id:
+            if workout_routine['id'] == id:
                 return workout_routine
 
     # def get_all_workout_routines(self, user_id):

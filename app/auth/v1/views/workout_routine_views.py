@@ -8,7 +8,6 @@ class WorkoutRoutine(Resource):
     """
     Class for handling workout routine endpoints.
     """
-
     def __init__(self):
         self.parser = RequestParser()
         self.parser.add_argument("workout", type=str, required=True, help="The type of workout is required. For example, upperbody workout.")
@@ -48,3 +47,24 @@ class WorkoutRoutine(Resource):
             "message": "The workout routine has been created!",
             "workout_routine": WorkoutRoutineModel.workout_routines
         }
+
+class SingleRoutine(Resource):
+    """class to manage one routine"""
+    def get(self, id):
+        routine = WorkoutRoutineModel.get_workout_routine_by_id(id)
+        if not routine:
+            return {
+                   "status": 404,
+                   "message": "No routines found"
+               }, 404
+        else:
+            return {
+               "status": "Ok",
+               "work_out_routine": routine
+           }, 200
+
+
+    def put(self):
+        pass
+    def delete(self):
+        pass
