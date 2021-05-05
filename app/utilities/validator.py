@@ -21,14 +21,12 @@ class Validators:
             }
 
     # validates against repetition of the same exact workout types
-    def exercise_exists(self, name, period):
-        """check if an exercise type already exists"""
-        exercises = ExerciseModel.get_all_exercises(self)
-        for exercise in exercises:
-            if exercise['name'] == self.name and exercise['period'] == self.period:
-                return {
-                    "status": 400,
-                    "error": "That workout type already exists"
-                }
+    def exercise_exists(self, name, description):
+        """check if a user exists"""
+        all_exercises = ExerciseModel.get_all_exercises(self)
+        for exercise in all_exercises:
+            if exercise['name'] == name and exercise['description'] == description:
+                return True
+
 
 
