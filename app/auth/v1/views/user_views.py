@@ -5,6 +5,23 @@ from flask_restful.reqparse import RequestParser
 from app.utilities.validator import Validators
 
 validate = Validators()
+
+
+class User(Resource):
+    """class to handle single user access, updates and deleting"""
+    def get(self, user_id):
+        user = UserModels.fetch_user_by_userid(user_id)
+        if not user:
+            return { "message": "user not found"}, 404
+        return user
+
+    def put(self, user_id):
+        pass
+
+    def delete(self, user_id):
+        pass
+
+
 class Users(Resource):
     """class for users endoints"""
     def __init__(self):
@@ -22,14 +39,17 @@ class Users(Resource):
                                  required=True,
                                  help="Kindly confirm your password")
 
+    # get users
     def get(self):
         """get all user endpoints"""
         users = UserModels.fetch_all(self)
-        return {
-            "users": users
-        }
-
-    # can i have another get for one user?
+        if users:
+            return{
+                "status": "Ok",
+                "users": users}, 200
+        else:
+            return {
+                "message": "No user found"}, 404
 
     def post(self):
         """register user endpoint"""
@@ -58,4 +78,6 @@ class Users(Resource):
             "message": "user registered",
             "user": new_user.__dict__
         }, 201
+
+
 

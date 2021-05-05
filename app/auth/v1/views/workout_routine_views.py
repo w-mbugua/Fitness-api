@@ -25,12 +25,12 @@ class WorkoutRoutine(Resource):
         args = request.get_json()
         workout = args['workout']
         sets = args['sets']
-        duration_in_mins = args['duration_in_min']
+        duration_in_mins = args['duration_in_mins']
         complete = args['complete']
 
         new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete)
 
         return {
             "message": "The workout routine has been created!",
-            "workout_routine": make_response(new_workout_routine)
+            "workout_routine": new_workout_routine.__dict__
         }

@@ -6,12 +6,12 @@ class WorkoutRoutineModel:
     workout_routines = []
 
     def __init__(self, workout, sets, duration_in_mins, complete):
-        self.id = len(WorkoutRoutineModel.workout_routine) + 1
+        self.id = len(WorkoutRoutineModel.workout_routines) + 1
         self.workout = workout
         self.sets = sets
         self.duration_in_mins = duration_in_mins
         self.complete = complete
-        self.user_id = UserModels.userId
+        self.user_id = UserModels.userId # how is this conecting to a particular user?
 
     def save_workout_routine(self):
         data = dict(
@@ -35,6 +35,6 @@ class WorkoutRoutineModel:
         for workout_routine in WorkoutRoutineModel.workout_routines:
             if workout_routine['user_id'] == self.user_id:
                 user_workout_routine.append(workout_routine)
-        
+
         return user_workout_routine
 
