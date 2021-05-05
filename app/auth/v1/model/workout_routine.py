@@ -36,3 +36,6 @@ class WorkoutRoutineModel:
         for workout_routine in WorkoutRoutineModel.workout_routines:
             workout_routine['complete'] = True
         return WorkoutRoutineModel.workout_routines
+
+    def workout_delete(self):
+        return WorkoutRoutineModel.workout_routines.clear()

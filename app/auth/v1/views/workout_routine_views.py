@@ -51,7 +51,7 @@ class WorkoutRoutine(Resource):
             "Workout routine": workout_routines
         }
 
-    def pull(self):
+    def put(self):
         """
         Mehtod for updating workout routine.
         """
@@ -60,4 +60,15 @@ class WorkoutRoutine(Resource):
 
         return {
             "message": "The workout routine have been completed!"
+        }
+
+    def delete(self):
+        """
+        Method for deleting workout routine.
+        """
+
+        workout_delete = WorkoutRoutineModel.workout_delete(self)
+
+        return {
+            "message": "The workout routine has been deleted."
         }
