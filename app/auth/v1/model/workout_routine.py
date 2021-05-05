@@ -31,3 +31,8 @@ class WorkoutRoutineModel:
 
     def get_all_workout_routines(self):
         return WorkoutRoutineModel.workout_routines
+
+    def workout_complete(self):
+        for workout_routine in WorkoutRoutineModel.workout_routines:
+            workout_routine['complete'] = True
+        return WorkoutRoutineModel.workout_routines

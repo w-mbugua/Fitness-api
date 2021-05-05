@@ -47,5 +47,17 @@ class WorkoutRoutine(Resource):
         workout_routines = WorkoutRoutineModel.get_all_workout_routines(self)
 
         return {
+            "status": 200,
             "Workout routine": workout_routines
+        }
+
+    def pull(self):
+        """
+        Mehtod for updating workout routine.
+        """
+
+        workout_complete = WorkoutRoutineModel.workout_complete(self)
+
+        return {
+            "message": "The workout routine have been completed!"
         }
