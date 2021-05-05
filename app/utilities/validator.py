@@ -13,7 +13,7 @@ class Validators:
 
     def user_exists(self, email):
         """check if a user exists"""
-        user = UserModels.fetch_user_by_email(self, email)
+        user = UserModels.fetch_user_by_email(email)
         if user:
             return {
                 "status": 400,
@@ -23,7 +23,7 @@ class Validators:
     # validates against repetition of the same exact workout types
     def exercise_exists(self, name, description):
         """check if a user exists"""
-        all_exercises = ExerciseModel.get_all_exercises(self)
+        all_exercises = ExerciseModel.get_all_exercises()
         for exercise in all_exercises:
             if exercise['name'] == name and exercise['description'] == description:
                 return True

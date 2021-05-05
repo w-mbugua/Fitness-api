@@ -9,6 +9,19 @@ from app.utilities.validator import Validators
 
 validate = Validators() # an instance of the validators class
 
+class SingleExercise(Resource):
+    def get(self, id):
+        exercise = ExerciseModel.get_exercise_by_id(id)
+        if exercise:
+            return{
+                "status": 200,
+                "exercise": exercise
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "message": "No exercise found"
+            }, 404
 class Exercise(Resource):
     """class to handle exercise endpoints"""
     def __init__(self):
@@ -21,13 +34,11 @@ class Exercise(Resource):
     #GET read,
     def get(self):
         """get all exercises"""
-        exercises = ExerciseModel.get_all_exercises(self)
+        exercises = ExerciseModel.get_all_exercises()
         if not exercises:
             return {"message": "No exercises found"}, 404
         return {
-            "exercises": exercises
-
-        }
+            "exercises": exercises}
 
     #POST, create
     def post(self):
