@@ -22,6 +22,8 @@ class Exercise(Resource):
     def get(self):
         """get all exercises"""
         exercises = ExerciseModel.get_all_exercises(self)
+        if not exercises:
+            return {"message": "No exercises found"}, 404
         return {
             "exercises": exercises
 
