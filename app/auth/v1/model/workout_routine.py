@@ -5,13 +5,13 @@ class WorkoutRoutineModel:
 
     workout_routines = []
 
-    def __init__(self, workout, sets, duration_in_mins, complete):
-        self.id = len(WorkoutRoutineModel.workout_routine) + 1
+    def __init__(self, workout, sets, duration_in_mins, complete, username):
+        self.id = len(WorkoutRoutineModel.workout_routines) + 1
         self.workout = workout
         self.sets = sets
         self.duration_in_mins = duration_in_mins
         self.complete = complete
-        self.user_id = UserModels.userId
+        self.username = username
 
     def save_workout_routine(self):
         data = dict(
@@ -20,7 +20,7 @@ class WorkoutRoutineModel:
             sets = self.sets,
             duration_in_mins = self.duration_in_mins,
             complete = self.complete,
-            user_id = self.user_id
+            username = self.username
         )
         WorkoutRoutineModel.workout_routines.append(data)
 
@@ -29,11 +29,11 @@ class WorkoutRoutineModel:
             if workout_routine['id'] == self.id:
                 return workout_routine
 
-    def get_all_workout_routines(self, user_id):
+    def get_all_workout_routines(self, username):
         user_workout_routine = []
 
         for workout_routine in WorkoutRoutineModel.workout_routines:
-            if workout_routine['user_id'] == self.user_id:
+            if workout_routine['username'] == self.username:
                 user_workout_routine.append(workout_routine)
         
         return user_workout_routine

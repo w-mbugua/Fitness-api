@@ -15,6 +15,7 @@ class WorkoutRoutine(Resource):
         self.parser.add_argument("sets", type=int, required=True, help="Please enter the number of sets.")
         self.parser.add_argument("duration_in_mins", type=int, required=True, help="Please enter the duration of the workout which should be in minutes.")
         self.parser.add_argument("complete", type=bool, required=True, help="Please enter a boolean response, True for complete, False for NOT complete.")
+        self.parser.add_argument("username", type=str, required=True, help="Please your preferred username.")
 
     def post(self):
         """
@@ -25,12 +26,15 @@ class WorkoutRoutine(Resource):
         args = request.get_json()
         workout = args['workout']
         sets = args['sets']
-        duration_in_mins = args['duration_in_min']
+        duration_in_mins = args['duration_in_mins']
         complete = args['complete']
+        username = args['username']
 
-        new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete)
+        new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete, username)
+        new_workout_routine.save_workout_routine()
 
         return {
+            "status": 201,
             "message": "The workout routine has been created!",
-            "workout_routine": make_response(new_workout_routine)
+            "workout_routine": new_workout_routine.__dict__
         }
