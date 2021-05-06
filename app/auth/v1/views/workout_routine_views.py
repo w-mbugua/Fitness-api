@@ -48,6 +48,10 @@ class WorkoutRoutine(Resource):
             "workout_routine": WorkoutRoutineModel.workout_routines
         }
 
+    #put
+
+    #delete
+
 class SingleRoutine(Resource):
     """class to manage one routine"""
     def get(self, id):

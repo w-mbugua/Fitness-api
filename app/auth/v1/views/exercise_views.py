@@ -22,6 +22,11 @@ class SingleExercise(Resource):
                 "status": 404,
                 "message": "No exercise found"
             }, 404
+
+    #put
+
+    #delete
+
 class Exercise(Resource):
     """class to handle exercise endpoints"""
     def __init__(self):
