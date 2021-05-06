@@ -23,6 +23,7 @@ class UserModels:
         self.users.append(data)
         return self.users
 
+
     @classmethod
     def fetch_user_by_userid(cls, user_id):
         """access a user using their id"""
@@ -31,7 +32,8 @@ class UserModels:
                 return user
 
     # fetch user by email
-    def fetch_user_by_email(self, email):
+    @classmethod
+    def fetch_user_by_email(cls, email):
         """access a user using their id"""
         for user in UserModels.users:
             if user['email'] == email:

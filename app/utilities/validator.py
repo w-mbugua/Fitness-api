@@ -20,6 +20,16 @@ class Validators:
                 "error": "That email already exists"
             }
 
+    def password_confirm(self, password, confirm_password):
+        """Method to confirm the password and confrm password are equal"""
+        return password == confirm_password
+
+    def hash_password(self, password):
+        """method to hide the password"""
+        new_password = ['*' for i in password if password is not None]
+        return ''.join(new_password)
+
+
     # validates against repetition of the same exact workout types
     def exercise_exists(self, name, description):
         """check if a user exists"""
@@ -27,6 +37,7 @@ class Validators:
         for exercise in all_exercises:
             if exercise['name'] == name and exercise['description'] == description:
                 return True
+
 
 
 

@@ -76,6 +76,7 @@ class WorkoutRoutine(Resource):
         }
             
 
+
 class SingleRoutine(Resource):
     """class to manage one routine"""
     def get(self, id):
