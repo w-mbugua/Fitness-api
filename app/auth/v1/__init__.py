@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api
+from .views.routine_views import Routine
 from .views.user_views import Users, User, LoginManager, AllUsers
 from .views.exercise_views import Exercise, SingleExercise
 from .views.workout_routine_views import WorkoutRoutine, SingleRoutine
@@ -17,3 +18,4 @@ api.add_resource(LoginManager, '/users/login')
 api.add_resource(AllUsers, '/users')
 
 api.add_resource(WorkoutRoutine, '/workout-routines/')
+
