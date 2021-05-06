@@ -8,20 +8,32 @@ class WorkoutRoutine(Resource):
     """
     Class for handling workout routine endpoints.
     """
-
     def __init__(self):
         self.parser = RequestParser()
-        self.parser.add_argument("workout", type=str, required=True, help="The type of workout is required. For example, push-ups.")
+        self.parser.add_argument("workout", type=str, required=True, help="The type of workout is required. For example, upperbody workout.")
         self.parser.add_argument("sets", type=int, required=True, help="Please enter the number of sets.")
         self.parser.add_argument("duration_in_mins", type=int, required=True, help="Please enter the duration of the workout which should be in minutes.")
         self.parser.add_argument("complete", type=bool, required=True, help="Please enter a boolean response, True for complete, False for NOT complete.")
-        self.parser.add_argument("username", type=str, required=True, help="Please your preferred username.")
+        self.parser.add_argument("username", type=str, required=True, help="Please enter your preferred username.")
+
+    def get(self):
+        routines = WorkoutRoutineModel.get_workout_plans(self)
+        if not routines:
+            return {
+                "status": 404,
+                "message": "No routines found"
+            },404
+        else:
+            return {
+                "status": "Ok",
+                "work_out_routines": routines
+            },200
+
 
     def post(self):
         """
-        Craete new workout routines.
+        Create new workout routines.
         """
-
         args = self.parser.parse_args()
         args = request.get_json()
         workout = args['workout']
@@ -31,6 +43,7 @@ class WorkoutRoutine(Resource):
         username = args['username']
 
         new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete, username)
+
         new_workout_routine.save_workout_routine()
 
         return {
@@ -39,17 +52,6 @@ class WorkoutRoutine(Resource):
             "workout_routine": new_workout_routine.__dict__
         }
 
-    def get(self):
-        """
-        Method for getting a workout routine by id.
-        """
-
-        workout_routines = WorkoutRoutineModel.get_all_workout_routines(self)
-
-        return {
-            "status": 200,
-            "Workout routine": workout_routines
-        }
 
     def put(self):
         """
@@ -59,7 +61,7 @@ class WorkoutRoutine(Resource):
         workout_complete = WorkoutRoutineModel.workout_complete(self)
 
         return {
-            "message": "The workout routine have been completed!"
+            "message": "The workout routine has been completed!"
         }
 
     def delete(self):
@@ -72,3 +74,26 @@ class WorkoutRoutine(Resource):
         return {
             "message": "The workout routine has been deleted."
         }
+            
+
+class SingleRoutine(Resource):
+    """class to manage one routine"""
+    def get(self, id):
+        routine = WorkoutRoutineModel.get_workout_routine_by_id(id)
+        if not routine:
+            return {
+                   "status": 404,
+                   "message": "No routines found"
+               }, 404
+        else:
+            return {
+               "status": "Ok",
+               "work_out_routine": routine
+           }, 200
+
+
+    def put(self):
+        pass
+    def delete(self):
+        pass
+
