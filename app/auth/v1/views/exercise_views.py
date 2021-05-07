@@ -23,9 +23,13 @@ class SingleExercise(Resource):
                 "message": "No exercise found"
             }, 404
 
-    #put
+    def delete(self, id):
+        exercise = ExerciseModel.get_exercise_by_id(id)
+        if not exercise:
+            return {"message": "That exercise does not exist"}, 404
+        ExerciseModel.delete_ex(exercise)
+        return {"message": "Exercise item successfully deleted"}, 200
 
-    #delete
 
 class Exercise(Resource):
     """class to handle exercise endpoints"""
@@ -43,6 +47,8 @@ class Exercise(Resource):
         if not exercises:
             return {"message": "No exercises found"}, 404
         return {
+            "status": "ok",
+            "results": len(ExerciseModel.exercises),
             "exercises": exercises}
 
     #POST, create
@@ -62,12 +68,7 @@ class Exercise(Resource):
         new_exercise = ExerciseModel(name, period, description)
         new_exercise.save()
         return {
-                "status": 201,
                 "message": "exercise successfully created",
                 "exercise": new_exercise.__dict__
-            }
-
-        #upadte
-
-        # delete
+            }, 201
 

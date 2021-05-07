@@ -48,3 +48,5 @@ class ExerciseModel:
                     "status": "Ok",
                     "search_results": len(search_results)
                 }
+    def delete_ex(self):
+        return ExerciseModel.exercises.remove(self)

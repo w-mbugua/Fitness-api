@@ -29,6 +29,9 @@ class Validators:
         new_password = ['*' for i in password if password is not None]
         return ''.join(new_password)
 
+    def is_astring(self, item):
+        return isinstance(item, str)
+
 
     # validates against repetition of the same exact workout types
     def exercise_exists(self, name, description):

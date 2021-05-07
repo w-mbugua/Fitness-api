@@ -5,9 +5,12 @@ class UserModels:
 
     users = []
 
-    def __init__(self, email, password, confirm_password):
+    def __init__(self, first_name, last_name, age, email, password, confirm_password):
         """init a user model"""
         self.userId = len(UserModels.users) + 1
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
         self.email = email
         self.password = password
         self.confirm_password = confirm_password
@@ -15,10 +18,13 @@ class UserModels:
     def register(self):
         """method to signup a user"""
         data = dict(
-        userId =self.userId,
-        email = self.email,
-        password = self.password,
-        confirm_password = self.confirm_password
+            userId=self.userId,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            age=self.age,
+            email=self.email,
+            password=self.password,
+            confirm_password=self.confirm_password
         )
         self.users.append(data)
         return self.users
@@ -42,6 +48,11 @@ class UserModels:
     def fetch_all(self):
         """get all data"""
         return UserModels.users
+
+    def delete_user(self):
+        return UserModels.users.remove(self)
+
+
 
 
 

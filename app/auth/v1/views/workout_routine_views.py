@@ -11,10 +11,10 @@ class WorkoutRoutine(Resource):
     def __init__(self):
         self.parser = RequestParser()
         self.parser.add_argument("workout", type=str, required=True, help="The type of workout is required. For example, upperbody workout.")
-        self.parser.add_argument("sets", type=int, required=True, help="Please enter the number of sets.")
+        self.parser.add_argument("sets", type=list, required=True, help="Please enter the number of sets.")
         self.parser.add_argument("duration_in_mins", type=int, required=True, help="Please enter the duration of the workout which should be in minutes.")
         self.parser.add_argument("complete", type=bool, required=True, help="Please enter a boolean response, True for complete, False for NOT complete.")
-        self.parser.add_argument("username", type=str, required=True, help="Please enter your preferred username.")
+        # self.parser.add_argument("username", type=str, required=True, help="Please enter your preferred username.")
 
     def get(self):
         routines = WorkoutRoutineModel.get_workout_plans(self)
@@ -29,7 +29,6 @@ class WorkoutRoutine(Resource):
                 "work_out_routines": routines
             },200
 
-
     def post(self):
         """
         Create new workout routines.
@@ -40,9 +39,9 @@ class WorkoutRoutine(Resource):
         sets = args['sets']
         duration_in_mins = args['duration_in_mins']
         complete = args['complete']
-        username = args['username']
+        # username = args['username']
 
-        new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete, username)
+        new_workout_routine = WorkoutRoutineModel(workout, sets, duration_in_mins, complete)
 
         new_workout_routine.save_workout_routine()
 
@@ -51,30 +50,6 @@ class WorkoutRoutine(Resource):
             "message": "The workout routine has been created!",
             "workout_routine": new_workout_routine.__dict__
         }
-
-
-    def put(self):
-        """
-        Mehtod for updating workout routine.
-        """
-
-        workout_complete = WorkoutRoutineModel.workout_complete(self)
-
-        return {
-            "message": "The workout routine has been completed!"
-        }
-
-    def delete(self):
-        """
-        Method for deleting workout routine.
-        """
-
-        workout_delete = WorkoutRoutineModel.workout_delete(self)
-
-        return {
-            "message": "The workout routine has been deleted."
-        }
-            
 
 
 class SingleRoutine(Resource):
@@ -92,9 +67,24 @@ class SingleRoutine(Resource):
                "work_out_routine": routine
            }, 200
 
+    def put(self, id):
+        """
+        Method for updating workout routine.
+        """
+        routine = WorkoutRoutineModel.get_workout_routine_by_id(id)
+        if not routine:
+           return { "message": "That workout does not exist" }, 400
+        else:
+            routine['complete'] = True
+            return {"message": "The workout has been completed!"}
 
-    def put(self):
-        pass
-    def delete(self):
-        pass
+
+    def delete(self, id):
+        """method to delete a single workout routine"""
+        routine = WorkoutRoutineModel.get_workout_routine_by_id(id)
+        if not routine:
+            return {"message": "That routine does not exist"}, 404
+        WorkoutRoutineModel.delete_workout(routine)
+        return {"message": "routine item successfully deleted"}, 200
+
 
